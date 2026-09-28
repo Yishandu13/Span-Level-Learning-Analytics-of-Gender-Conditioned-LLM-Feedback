@@ -8,7 +8,7 @@ The toolkit was developed for analysing counterfactual gender-cue differences in
 
 span-localisation-toolkit/
 
-'''
+```text
 │
 ├── 01_span_segmentation_meta_annotation.py
 ├── 02_embedding_counterfactual_alignment.py
