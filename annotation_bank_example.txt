@@ -1,0 +1,454 @@
+ANNOTATION BANK EXAMPLE
+=======================
+
+Purpose
+-------
+This file illustrates how a pedagogical / linguistic annotation bank can be
+organised for use with the span-level analysis toolkit.
+
+IMPORTANT
+---------
+This is an ILLUSTRATIVE EXAMPLE only.
+
+It is not intended to reproduce the complete annotation bank used in any
+particular study. Users should develop, validate, and freeze an annotation
+scheme appropriate to their own theoretical framework, educational context,
+and corpus.
+
+The Python analysis modules deliberately keep the annotation bank external
+to the analysis code. This separation allows annotation rules to be revised,
+audited, documented, or replaced without changing frozen span boundaries,
+embeddings, or counterfactual alignments.
+
+
+----------------------------------------------------------------------
+GENERAL FORMAT
+----------------------------------------------------------------------
+
+Each construct can be represented as either:
+
+1. CATEGORICAL
+   Exactly one primary label is assigned to a span.
+
+2. BINARY / MULTI-LABEL
+   Each feature is coded independently as present (1) or absent (0).
+
+A rule may contain:
+
+LABEL
+    Name of the category or feature.
+
+TYPE
+    categorical / binary
+
+INCLUDE
+    Lexical, syntactic, semantic, or contextual cues supporting the label.
+
+EXCLUDE
+    Conditions that prevent a rule from firing.
+
+CONTEXT
+    Additional requirements based on surrounding text, dependency structure,
+    feedback module, or discourse function.
+
+PRIORITY
+    Optional rule priority when multiple categorical rules are triggered.
+
+EVIDENCE
+    Optional matched expression or text fragment retained for auditing.
+
+
+
+A. BROAD FEEDBACK FUNCTION
+
+
+TYPE: categorical
+
+Example categories:
+
+A1_overall_impression
+A2_strengths_improvement
+A3_argument_evidence
+A4_writing_competency_style
+A5_development_recommendation
+
+Recommended implementation:
+- Prefer explicit prompt-defined section headings when available.
+- Use contextual / lexical fallback rules only when structural information
+  is absent.
+- Keep the module assignment independent from the gender/counterfactual
+  condition.
+
+
+Example:
+
+LABEL:
+    A5_development_recommendation
+
+INCLUDE EXAMPLES:
+    "next step"
+    "revise"
+    "in your next draft"
+    "to improve this"
+    "consider adding"
+
+CONTEXT:
+    Developmental or revision-oriented context.
+
+EXCLUDE:
+    A sentence merely describing an existing weakness without proposing
+    future action.
+
+
+
+B. PEDAGOGICAL ACT
+
+
+TYPE: categorical
+
+Example categories:
+
+B1_evaluation_diagnosis
+B2_explanation_rationale
+B3_correction_model
+B4_suggestion_strategy
+B5_question_probe
+B6_elaboration_request
+B7_praise_encouragement
+B8_metacognitive_prompt
+
+
+Example 1
+
+LABEL:
+    B1_evaluation_diagnosis
+
+INCLUDE EXAMPLES:
+    r"\b(clear|strong|effective|weak|unclear|convincing)\b"
+    evaluative adjective + writing object
+    explicit diagnosis of quality or difficulty
+
+EXAMPLE TEXT:
+    "Your central claim is clear."
+    "The evidence is not yet convincing."
+
+EXCLUDE:
+    Pure praise without diagnostic content.
+    A recommendation that primarily tells the learner what to do next.
+
+
+Example 2
+
+LABEL:
+    B4_suggestion_strategy
+
+INCLUDE EXAMPLES:
+    r"\b(consider|try|you could|you might)\b"
+    strategy-oriented revision language
+
+EXAMPLE TEXT:
+    "Consider linking each example back to your main claim."
+    "You could compare the two sources before drawing your conclusion."
+
+EXCLUDE:
+    Direct correction where the model simply supplies the replacement answer.
+
+
+
+C. FEEDBACK LEVEL
+
+
+TYPE: categorical
+
+Example categories:
+
+C1_task
+C2_process
+C3_self_regulation
+C4_self
+
+
+Example 1
+
+LABEL:
+    C1_task
+
+INCLUDE EXAMPLES:
+    references to the quality/correctness of the current sentence,
+    paragraph, argument, evidence, grammar, or response
+
+EXAMPLE TEXT:
+    "This paragraph needs a clearer topic sentence."
+
+
+Example 2
+
+LABEL:
+    C2_process
+
+INCLUDE EXAMPLES:
+    strategy
+    planning
+    reasoning procedure
+    checking
+    organising
+    comparing
+    revising approach
+
+EXAMPLE TEXT:
+    "Before drafting the paragraph, identify which evidence best supports
+    each claim."
+
+NOTE:
+    The distinction should concern the level of feedback, not merely the
+    presence of words such as "revise" or "improve".
+
+
+
+D. FEEDBACK ORIENTATION
+
+
+TYPE: binary / multi-label
+
+Features:
+
+D_feedup
+D_feedback
+D_feedforward
+
+
+Example:
+
+D_feedup = 1
+    when the span clarifies the goal, criteria, or intended standard.
+
+D_feedback = 1
+    when the span evaluates or explains current performance.
+
+D_feedforward = 1
+    when the span provides guidance for subsequent action or revision.
+
+More than one feature may be active in the same span.
+
+
+
+E. AGENCY POSITIONING
+
+
+TYPE: binary / multi-label
+
+Features:
+
+E_support
+E_control
+
+
+Example: agency support
+
+INCLUDE:
+    genuine choice
+    learner-owned strategy selection
+    reflective decision-making
+    revision ownership
+
+EXAMPLE TEXT:
+    "Decide which of these examples best supports the point you want to make."
+
+
+Example: agency control
+
+INCLUDE:
+    prescribed solution
+    compliance demand
+    replacement of learner decision
+    tightly specified revision action
+
+EXAMPLE TEXT:
+    "Replace this sentence with a direct statement of your argument."
+
+IMPORTANT:
+    An imperative form alone should not automatically be coded as agency
+    control. The rule should consider whether the learner's substantive
+    decision-making is constrained or replaced.
+
+
+
+I1. WRITER / LEARNER POSITIONING
+
+
+TYPE: binary / multi-label
+
+Features:
+
+I1_epistemic
+I1_communicative
+
+
+Example: epistemic
+
+INCLUDE:
+    reasoning
+    evidence evaluation
+    critical judgement
+    argument construction
+    authorial stance
+
+EXAMPLE TEXT:
+    "Evaluate whether this evidence actually supports your causal claim."
+
+
+Example: communicative
+
+INCLUDE:
+    audience awareness
+    reader engagement
+    relational communication
+    personal experience
+    affective expression
+
+EXAMPLE TEXT:
+    "Think about how the reader will understand your experience here."
+
+NOTE:
+    The two features need not be mutually exclusive.
+
+
+
+I2. EXPECTATION / DEVELOPMENTAL FRAMING
+
+
+TYPE: binary / multi-label
+
+Features:
+
+I2_potential
+I2_deficit
+
+
+Example: potential / high expectation
+
+INCLUDE:
+    explicit confidence in capacity
+    future potential
+    extension to more demanding performance
+    high expectations
+
+EXAMPLE TEXT:
+    "You are ready to develop this into a more sophisticated argument."
+
+
+Example: deficit / remedial framing
+
+INCLUDE:
+    learner-level deficit attribution
+    basic remediation
+    lowered challenge
+    minimum-standard framing
+
+EXAMPLE TEXT:
+    "Focus first on mastering the basic structure before attempting a more
+    complex argument."
+
+EXCLUDE:
+    Ordinary grammar or spelling correction when it does not imply anything
+    about the learner's underlying capacity or developmental level.
+
+
+
+J. LINGUISTIC REALISATION
+
+
+TYPE: binary / multi-label
+
+Possible features:
+
+J_question
+J_imperative
+J_modal
+J_hedge
+J_second_person
+J_praise
+J_evaluation
+J_suggestion
+J_rationale
+
+
+Illustrative rules:
+
+J_question
+    punctuation or syntactic interrogative structure
+
+J_imperative
+    imperative clause structure
+
+J_modal
+    r"\b(can|could|may|might|should|would)\b"
+
+J_hedge
+    r"\b(perhaps|possibly|may|might|seems?|appears?)\b"
+
+J_second_person
+    r"\b(you|your|yours)\b"
+
+J_suggestion
+    r"\b(consider|try|you could|you might)\b"
+
+J_rationale
+    explanation linking recommendation and reason, e.g.
+    "because", "so that", "which will help"
+
+
+
+RECOMMENDED DEVELOPMENT PROCEDURE
+
+
+1. Define theoretically meaningful constructs before inspecting final
+   localised results.
+
+2. Develop operational rules on a calibration subset.
+
+3. Inspect false positives, false negatives, mixed cases, and boundary cases.
+
+4. Revise general inclusion/exclusion/contextual criteria rather than
+   memorising individual examples.
+
+5. Evaluate annotation reliability or agreement on an independent human-coded
+   subset where possible.
+
+6. Freeze the rule bank before final downstream statistical interpretation.
+
+7. Preserve evidence strings / rule hits for auditability.
+
+8. Never use counterfactual condition labels themselves as annotation cues.
+
+
+
+INTEGRATION WITH THE PYTHON TOOLKIT
+
+
+The segmentation module expects an external annotation callable:
+
+    annotator(span_text, row_metadata) -> dict
+
+For example:
+
+    def annotator(text, metadata):
+
+        return {
+            "B_act_primary": "...",
+            "C_feedback_level": "...",
+            "D_feedup": 0,
+            "D_feedback": 1,
+            "D_feedforward": 0,
+            "E_support": 0,
+            "E_control": 0,
+            "I1_epistemic": 1,
+            "I1_communicative": 0,
+            "I2_potential": 0,
+            "I2_deficit": 0,
+            "J_question": 0,
+            "J_imperative": 0,
+        }
+
+The exact implementation of these rules should remain external to the
+general-purpose segmentation and statistical modules.
