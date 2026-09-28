@@ -7,14 +7,23 @@ The repository implements a four-stage workflow that separates **where semantic 
 The toolkit was developed for analysing counterfactual gender-cue differences in LLM-generated educational feedback, but the core methods are intentionally implemented in a task- and condition-agnostic form and can be adapted to other counterfactual comparisons.
 
 span-localisation-toolkit/
+
 │
+
 ├── 01_span_segmentation_meta_annotation.py
+
 ├── 02_embedding_counterfactual_alignment.py
+
 ├── 03_loo_permutation_localisation.py
+
 ├── 04_statistical_pedagogical_characterisation.py
+
 │
+
 ├── annotation_bank_example.txt
+
 ├── README.md
+
 └── requirements.txt
 
 ---
