@@ -18,7 +18,7 @@ span-localisation-toolkit/
 ├── annotation_bank_example.txt
 ├── README.md
 └── requirements.txt
-'''
+
 ---
 
 ## Overview
